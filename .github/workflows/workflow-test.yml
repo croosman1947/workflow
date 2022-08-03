@@ -24,7 +24,7 @@ jobs:
      - name: Setup Env Vars
 
        run: |
-        if [[ ${{ ${{ github.event.head_commit.message }} }} == 'australia' ]] ; then
+        if [[ ${{ github.event.head_commit.message }} == 'australia' ]] ; then
           echo "VAR=${{ env.test1 }}" >> $GITHUB_ENV
         elif [[ ${{ steps.extract_branch.outputs.branch }} == 'usa' ]] ; then
           echo "VAR=${{ env.test2}}" >> $GITHUB_ENV
