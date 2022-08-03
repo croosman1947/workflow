@@ -28,4 +28,8 @@ jobs:
         elif [[ ${{ steps.extract_branch.outputs.branch }} == 'usa' ]] ; then
           echo "VAR=${{ env.test2}}" >> $GITHUB_ENV
         fi
-          echo "Based on the commit message this pipeline should run for region: ${{ env.VAR }}"
+
+     - name: Echo var
+       id: check-var
+       run: |
+         echo "Based on the commit message this pipeline should run for region: ${{ env.VAR }}"
