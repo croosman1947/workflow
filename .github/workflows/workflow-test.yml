@@ -24,3 +24,12 @@ jobs:
        id: check-var
        run: |
          echo "The commit message was ${{ github.event.head_commit.message }}"
+
+    steps:
+    - name: Setup Env Vars
+      run: |
+        if [[ '${{ github.event.head_commit.message }}' == 'australia' ]] ; then
+          echo "Australia commit message"
+        elif [[ '${{ github.event.head_commit.message }}' == 'usa' ]] ; then
+          echo "USA commit message"
+        fi
