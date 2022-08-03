@@ -18,21 +18,9 @@ jobs:
       test1: australia
       test2: usa
 
-      test3: cosmin
-
-
     steps:
-
-     - name: Setup Env Vars
-
-       run: |
-        if [[ ${{ env.test3 }} == "cosmin" ]] ; then
-          echo "VAR=${{ env.test1 }}" >> $GITHUB_ENV
-        elif [[ ${{ steps.extract_branch.outputs.branch }} == "usa" ]] ; then
-          echo "VAR=${{ env.test2}}" >> $GITHUB_ENV
-        fi
 
      - name: Echo var
        id: check-var
        run: |
-         echo "The commit message was ${{ env.VAR }}"
+         echo "The commit message was ${{ github.event.head_commit.message }}"
