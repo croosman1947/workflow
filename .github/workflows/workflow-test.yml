@@ -1,0 +1,33 @@
+name: Cosmin-Test
+
+on:
+  push:
+    branches:
+      - 'cosmin-test-1'          
+      - 'cosmin-test-2'          
+
+
+jobs:
+  build:
+    name: Cosmin-Test
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    env:
+
+      test1: cosmin-test-1
+      test2: cosmin-test-2
+
+
+    steps:
+
+     - name: Extract branch name
+       shell: bash
+       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+       id: extract_branch
+
+     - name: Echo var
+       id: check-var
+       run: |
+         echo "The branch which triggered this run is ${{ steps.extract_branch.outputs.branch }}"
