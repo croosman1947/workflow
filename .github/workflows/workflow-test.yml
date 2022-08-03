@@ -3,10 +3,9 @@ name: Cosmin-Test
 on:
   push:
     branches:
-      - 'cosmin-test-1'          
-      - 'cosmin-test-2'          
+      - 'cosmin-test-1'                  
 
-
+      
 jobs:
   build:
     name: Cosmin-Test
@@ -16,18 +15,17 @@ jobs:
       contents: read
     env:
 
-      test1: cosmin-test-1
-      test2: cosmin-test-2
+      test1: australia
+      test2: usa
 
 
     steps:
 
-     - name: Extract branch name
-       shell: bash
-       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-       id: extract_branch
-
-     - name: Echo var
-       id: check-var
+     - name: Setup Env Vars
        run: |
-         echo "The branch which triggered this run is ${{ steps.extract_branch.outputs.branch }}"
+        if [[ ${{ github.event.head_commit.message }} == 'australia' ]] ; then
+          echo "VAR=${{ env.test1 }}" >> $GITHUB_ENV
+        elif [[ ${{ steps.extract_branch.outputs.branch }} == 'usa' ]] ; then
+          echo "VAR=${{ env.test2}}" >> $GITHUB_ENV
+        fi
+          echo "Based on the commit message this pipeline should run for region: ${{ env.VAR }}"
