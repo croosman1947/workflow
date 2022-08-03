@@ -21,21 +21,16 @@ jobs:
 
     steps:
 
-     - name: Extract branch name
-       shell: bash
-       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-       id: extract_branch
-
      - name: Setup Env Vars
 
        run: |
-        if [[ ${{ steps.extract_branch.outputs.branch }} == 'cosmin-test-1' ]] ; then
+        if [[ ${{ ${{ github.event.head_commit.message }} }} == 'australia' ]] ; then
           echo "VAR=${{ env.test1 }}" >> $GITHUB_ENV
-        elif [[ ${{ steps.extract_branch.outputs.branch }} == 'cosmin-test-2' ]] ; then
+        elif [[ ${{ steps.extract_branch.outputs.branch }} == 'usa' ]] ; then
           echo "VAR=${{ env.test2}}" >> $GITHUB_ENV
         fi
 
      - name: Echo var
        id: check-var
        run: |
-         echo ${{ env.VAR }}
+         echo "The commit message was ${{ env.VAR }}"
